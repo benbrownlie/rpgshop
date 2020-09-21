@@ -16,26 +16,23 @@ namespace HelloWorld
 
         public Shop()
         {
-            
+            _gold = 100;
         }
 
-        public Shop(string nameVal, int costVal)
+        public Shop(Item[] items)
         {
-
-        }
-
-        public bool Sell(Player player, int gold, int cost)
-        {
-            bool purchase = false;
-
-            if (purchase == true)
+            for (int i = 0; i < _inventory.Length; i++)
             {
-                gold += 25;
-                return true;
+                _inventory[i] = items[i];
             }
-            return false;
         }
 
+        public bool Sell(Player player, int shopIndex, int playerIndex)
+        {
+            return player.Buy(_inventory[shopIndex], playerIndex);
+        }
+
+        //Optional
         public void CheckPlayerFunds(Player player)
         {
 

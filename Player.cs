@@ -41,25 +41,15 @@ namespace HelloWorld
             return false;
         }
 
-        public bool Buy(Item bread, Item loaf, Item grain, int cost)
+        public bool Buy(Item stock, int cost)
         {
-            bool purchase = false;
-
-            if ( purchase == true)
+            if(_gold >= stock.cost)
             {
-                _gold -= 25;
+                _gold -= stock.cost;
                 return true;
+
             }
             return false;
-        }
-
-        public void DisplayInventory()
-        {
-            for (int i = 0; i < _inventory.Length; i++)
-            {
-                _inventory[i].name[i];
-            }
-
         }
 
         
