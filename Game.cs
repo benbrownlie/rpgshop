@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HelloWorld
 {
@@ -12,19 +10,20 @@ namespace HelloWorld
         private Item _bread;
         private Item _loaf;
         private Item _grain;
-        private Item _shopInventory;
-        //private shopInvetory.Item[];
+        private Item[] _shopInventory;
 
         private void InitializeItems()
         {
             _bread.cost = 25;
             _bread.name = "Bread";
             //
-            _loaf.cost = 25;
+            _loaf.cost = 50;
             _loaf.name = "Loaf";
             //
-            _grain.cost = 25;
+            _grain.cost = 15;
             _grain.name = "Grain";
+            //
+            _shopInventory = new Item[3];
         }
 
 
@@ -47,14 +46,14 @@ namespace HelloWorld
                 else if (input == '2')
                 {
                     _player.AddItemInventory(_loaf, 1);
-                    _shop.Sell(_player, 1, 0);
-                    _player.Buy(_loaf, 25);
+                    _shop.Sell(_player, 1, 1);
+                    _player.Buy(_loaf, 50);
                 }
                 else if (input == '3')
                 {
                     _player.AddItemInventory(_grain, 2);
-                    _shop.Sell(_player, 2, 0);
-                    _player.Buy(_grain, 25);
+                    _shop.Sell(_player, 2, 2);
+                    _player.Buy(_grain, 15);
                 }
                 else
                 {
@@ -65,12 +64,11 @@ namespace HelloWorld
 
         }
 
-       public Item PrintInventory(Item[] inventory)
+       public void PrintInventory(Item[] inventory)
         {
-            for (int i = 0; i < inventory.Length; i++)
+            for (int i = 0; i < _shopInventory.Length; i++)
             {
-                Item._shopInventory[i] = inventory[i];
-                
+                Console.WriteLine(inventory);
             }
         }
 

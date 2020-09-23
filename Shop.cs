@@ -31,13 +31,6 @@ namespace HelloWorld
         {
             return player.Buy(_inventory[shopIndex], playerIndex);
         }
-
-        //Optional
-        public void CheckPlayerFunds(Player player)
-        {
-
-        }
-
         
     }
 }
