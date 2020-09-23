@@ -17,20 +17,30 @@ namespace HelloWorld
         public Shop()
         {
             _gold = 100;
+            _inventory = new Item[3];
         }
 
         public Shop(Item[] items)
         {
-            for (int i = 0; i < _inventory.Length; i++)
-            {
-                _inventory[i] = items[i];
-            }
+            _gold = 100;
+            //Allows for multiple shop inventories to be made. Simply pass in items.
+            _inventory = items;
         }
 
         public bool Sell(Player player, int shopIndex, int playerIndex)
         {
-            return player.Buy(_inventory[shopIndex], playerIndex);
+            //Find the item to buy in the inventory array
+            Item itemtoBuy = _inventory[shopIndex];
+            //Check to see if the player purchased the item successfully
+            if (player.Buy(itemtoBuy, playerIndex))
+            {
+                //Increase shops item gold by cost to complete transaction
+                _gold += itemtoBuy.cost;
+                return true;
+            }
+            return false;
         }
+
         
     }
 }

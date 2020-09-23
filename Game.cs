@@ -31,44 +31,81 @@ namespace HelloWorld
         {
             Console.WriteLine("Welcome to my shop!");
             Console.WriteLine("What are you interested in today?");
-            Console.WriteLine("1. " + _bread.name + "Cost: " + _bread.cost);
-            Console.WriteLine("2. " + _loaf.name + "Cost: " + _loaf.cost);
-            Console.WriteLine("3. " + _grain.name + "Cost: " + _grain.cost);
+
+            PrintInventory(_shopInventory);
+            int itemIndex = -1;
             char input = Console.ReadKey().KeyChar;
             
+            
+            switch (input)
             {
-                if(input == '1')
+                case '1':
                 {
-                    _player.AddItemInventory(_bread, 0);
-                    _shop.Sell(_player, 0, 0);
-                    _player.Buy(_bread, 25);
+                    itemIndex = 0;
+                    break;
                 }
-                else if (input == '2')
+                case '2':
                 {
-                    _player.AddItemInventory(_loaf, 1);
-                    _shop.Sell(_player, 1, 1);
-                    _player.Buy(_loaf, 50);
+                    itemIndex = 1;
+                    break;
                 }
-                else if (input == '3')
+                case '3':
                 {
-                    _player.AddItemInventory(_grain, 2);
-                    _shop.Sell(_player, 2, 2);
-                    _player.Buy(_grain, 15);
+                    itemIndex = 2;
+                    break;
                 }
-                else
+                default:
                 {
-                    Console.WriteLine("invalid input");
+                    return;
                 }
             }
-            _player.GetInventory(); 
+                
+            if(_player.GetGold() < _shopInventory[itemIndex].cost)
+            {
+                Console.WriteLine("You cant afford this");
+                return;
+            }
+
+            Console.WriteLine("Choose a slot to replace");
+
+            PrintInventory(_player.GetInventory());
+
+            input = Console.ReadKey().KeyChar;
+
+            int playerIndex = -1;
+
+            switch (input)
+            {
+                case '1':
+                    {
+                        playerIndex = 0;
+                        break;
+                    }
+                case '2':
+                    {
+                        playerIndex = 1;
+                        break;
+                    }
+                case '3':
+                    {
+                        playerIndex = 2;
+                        break;
+                    }
+                default:
+                    {
+                        return;
+                    }
+            }
+
+            _shop.Sell(_player, itemIndex, playerIndex);
 
         }
 
        public void PrintInventory(Item[] inventory)
         {
-            for (int i = 0; i < _shopInventory.Length; i++)
+            for (int i = 0; i < inventory.Length; i++)
             {
-                Console.WriteLine(inventory);
+                Console.WriteLine((i + 1) + ". " + inventory[i].name + inventory[i].cost);
             }
         }
 
@@ -89,7 +126,11 @@ namespace HelloWorld
         //Performed once when the game begins
         public void Start()
         {
-            
+            _gameOver = false;
+            _player = new Player();
+            InitializeItems();
+            _shopInventory = new Item[] { _bread, _loaf, _grain };
+            _shop = new Shop(_shopInventory);
         }
 
         //Repeated until the game ends

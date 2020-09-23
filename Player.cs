@@ -41,15 +41,23 @@ namespace HelloWorld
             return false;
         }
 
-        public bool Buy(Item stock, int cost)
+        public bool Buy(Item stock, int inventoryIndex)
         {
             if(_gold >= stock.cost)
             {
+                //subtracts gold
                 _gold -= stock.cost;
+                //places item in inventory
+                _inventory[inventoryIndex] = stock;
                 return true;
 
             }
             return false;
+        }
+
+        public int GetGold()
+        {
+            return _gold;
         }
 
         
